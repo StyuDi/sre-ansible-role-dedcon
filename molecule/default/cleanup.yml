@@ -1,0 +1,7 @@
+- name: Cleanup before destroy
+  hosts: all
+  tasks:
+    - name: Remove temporary files
+      file:
+        path: /tmp/somefile
+        state: absent
