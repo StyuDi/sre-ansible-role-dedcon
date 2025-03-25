@@ -1,16 +1,19 @@
----
 - name: Cleanup before destroy
   hosts: all
   gather_facts: no
+
   tasks:
-    - name: Ping to check connectivity
-      ping:
-      register: ping_result
+    - name: Check container availability (ping via localhost)
+      delegate_to: localhost
+      command: docker inspect -f '{{ .State.Running }}' ansible-role-test
+      register: container_status
+      failed_when: false
+      changed_when: false
       ignore_errors: true
 
-    - name: Skip cleanup if unreachable
+    - name: Skip cleanup if container is not running
       meta: end_play
-      when: ping_result is failed
+      when: container_status.rc != 0 or "'true'" not in container_status.stdout
 
     - name: Ensure /tmp exists
       stat:
