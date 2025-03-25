@@ -1,7 +1,7 @@
 galaxy_info:
-  role_name: ansible-role-{{cookiecutter.setup_name | lower | replace(' ', '_')}}
+  role_name: dedcon
   author: kevit
-  description: This role install {{cookiecutter.setup_name}}
+  description: This role installs DedCon game server
   company: White Horse LLC
   license: MIT
   min_ansible_version: 2.7
@@ -12,6 +12,8 @@ galaxy_info:
         - 7
 
   galaxy_tags:
+    - dedcon
+    - gameserver
     - system
 
 dependencies: []
