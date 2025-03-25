@@ -1,0 +1,6 @@
+- name: Prepare CentOS image
+  hosts: all
+  become: false
+  tasks:
+    - name: Install sudo
+      raw: yum install -y sudo
