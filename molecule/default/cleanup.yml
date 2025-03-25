@@ -1,7 +1,14 @@
 - name: Cleanup before destroy
   hosts: all
+  gather_facts: yes
   tasks:
-    - name: Remove temporary files
+    - name: Ensure /tmp exists
+      stat:
+        path: /tmp
+      register: tmp_dir
+
+    - name: Remove temp file if /tmp exists
       file:
-        path: /tmp/somefile
+        path: /tmp/test-cleanup.txt
         state: absent
+      when: tmp_dir.stat.exists
