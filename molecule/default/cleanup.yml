@@ -1,7 +1,17 @@
+---
 - name: Cleanup before destroy
   hosts: all
-  gather_facts: yes
+  gather_facts: no
   tasks:
+    - name: Ping to check connectivity
+      ping:
+      register: ping_result
+      ignore_errors: true
+
+    - name: Skip cleanup if unreachable
+      meta: end_play
+      when: ping_result is failed
+
     - name: Ensure /tmp exists
       stat:
         path: /tmp
